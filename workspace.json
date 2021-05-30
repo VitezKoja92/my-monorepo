@@ -1,0 +1,129 @@
+{
+  "version": 2,
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "defaultProject": "authentication",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "strict": true,
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint",
+        "strict": true
+      }
+    }
+  },
+  "projects": {
+    "authentication": {
+      "root": "apps/authentication",
+      "sourceRoot": "apps/authentication/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/authentication",
+            "index": "apps/authentication/src/index.html",
+            "main": "apps/authentication/src/main.tsx",
+            "polyfills": "apps/authentication/src/polyfills.ts",
+            "tsConfig": "apps/authentication/tsconfig.app.json",
+            "assets": [
+              "apps/authentication/src/favicon.ico",
+              "apps/authentication/src/assets"
+            ],
+            "styles": ["apps/authentication/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/authentication/src/environments/environment.ts",
+                  "with": "apps/authentication/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "authentication:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "authentication:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/authentication/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/authentication"],
+          "options": {
+            "jestConfig": "apps/authentication/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "authentication-e2e": {
+      "root": "apps/authentication-e2e",
+      "sourceRoot": "apps/authentication-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/authentication-e2e/cypress.json",
+            "tsConfig": "apps/authentication-e2e/tsconfig.e2e.json",
+            "devServerTarget": "authentication:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "authentication:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/authentication-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
