@@ -25,6 +25,9 @@
     "authentication-e2e": {
       "tags": [],
       "implicitDependencies": ["authentication"]
+    },
+    "ui": {
+      "tags": []
     }
   }
 }
